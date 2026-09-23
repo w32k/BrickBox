@@ -71,6 +71,9 @@ BBStatus NetCreateClient(_IN_ const char* ip, _IN_ uint16_t port, _OUT_ NetClien
 
 void NetCloseClient(_IN_ NetClient* client){
     close(client->sock);
+    #ifdef _WIN32
+    WSACleanup();
+    #endif
 }
 
 BBStatus NetClientCheckForEvent(_IN_ NetClient* client){

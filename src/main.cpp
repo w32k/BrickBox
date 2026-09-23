@@ -6,7 +6,6 @@
 #include <net/packets/serverbound.h>
 #include <unistd.h>
 
-
 i32 main(){
     DEBUG_INFO("Brickbox %s (Implementing %s)\n", VER, MC_VER);
 
@@ -27,7 +26,6 @@ i32 main(){
         DEBUG_FAIL("??\n");
         return 3;
     }
-
     while(GameIsRunning()){
         if(NetClientCheckForEvent(&client) == BBSTATUS_SUCCESS){
             BBStatus status = NetClientHandleEvents(&client);

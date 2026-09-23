@@ -121,7 +121,6 @@ BBStatus NetUpdateEnabledFeatures(_IN_ NetClient* client, _IN_ ByteBuf* packet){
     char* packs[] = {"minecraft:core:1.21.11"};
     BBStatus status = NetKnownPacks(client, packs, 1);
     return status;
-
 }
 
 BBStatus NetSelectUnknownPacks(_IN_ NetClient* client, _IN_ ByteBuf* packet){
