@@ -27,7 +27,7 @@ BBStatus NetLoginFinished(_IN_ NetClient* client, _IN_ ByteBuf* packet){
 BBStatus NetInitCompression(_IN_ NetClient* client, _IN_ ByteBuf* packet){
     NetEnableCompression();
     i32 compLimit = 0;
-    BBStatus status = CoreReadVarInt(&compLimit, packet);
+    BBStatus status = NetReadVarInt(&compLimit, packet);
     if(status != BBSTATUS_SUCCESS){
         return status;
     }
@@ -63,7 +63,7 @@ BBStatus NetFinishConfiguration(_IN_ NetClient* client, _IN_ ByteBuf* packet){
 
 BBStatus NetKeepAlive(_IN_ NetClient* client, _IN_ ByteBuf* packet){
     u64 result = 0;
-    BBStatus status = CoreReadU64(&result, packet);
+    BBStatus status = NetReadU64(&result, packet);
     if(status != BBSTATUS_SUCCESS){
         return status;
     }
@@ -93,11 +93,11 @@ BBStatus NetResourcePackPop(_IN_ NetClient* client, _IN_ ByteBuf* packet){
 
 BBStatus NetResourcePackPush(_IN_ NetClient* client, _IN_ ByteBuf* packet){
     u64 first, second = 0;
-    BBStatus status = CoreReadU64(&first, packet);
+    BBStatus status = NetReadU64(&first, packet);
     if(status != BBSTATUS_SUCCESS){
         return status;
     }
-    status = CoreReadU64(&second, packet);
+    status = NetReadU64(&second, packet);
     if(status != BBSTATUS_SUCCESS){
         return status;
     }

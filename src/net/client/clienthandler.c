@@ -23,13 +23,13 @@ PacketHandlerCallback configStateCallbacks[] = {
 
 static inline BBStatus ReadUncompressedPacket(_IN_ NetClient* client, _IN_ ByteBuf* packet, _IN_ i32 length){
     //DEBUG_PASS("parsing uncompressed packet (%d)\n", length);
-    BBStatus status = CoreCreateByteBuf(packet, length);
+    BBStatus status = NetCreateByteBuf(packet, length);
     if(status != BBSTATUS_SUCCESS){
         return status;
     }
     status = NetClientRead(client, length, packet->data);
     if(status != BBSTATUS_SUCCESS){
-        CoreDeleteByteBuf(packet);
+        NetDeleteByteBuf(packet);
         return status;
     }
     packet->writeIndex = length;
@@ -40,7 +40,7 @@ static inline BBStatus ReadCompressedPacket(_IN_ NetClient* client, _IN_ i32 pac
                             _IN_ i32 dataLength, _OUT_ ByteBuf* packet){
     //DEBUG_PASS("parsing compressed packet (p: %d, d: %d)\n", packetLength, dataLength);
     ByteBuf compressedPacket = {0};
-    BBStatus status = CoreCreateByteBuf(&compressedPacket, packetLength);
+    BBStatus status = NetCreateByteBuf(&compressedPacket, packetLength);
     if(status != BBSTATUS_SUCCESS){
         return status;
     }
@@ -50,11 +50,11 @@ static inline BBStatus ReadCompressedPacket(_IN_ NetClient* client, _IN_ i32 pac
     }
     status = NetDecompressPacket(&compressedPacket, packetLength, dataLength, packet);
     if(status != BBSTATUS_SUCCESS){
-        CoreDeleteByteBuf(&compressedPacket);
+        NetDeleteByteBuf(&compressedPacket);
         return status;
     }
     packet->writeIndex = dataLength;
-    CoreDeleteByteBuf(&compressedPacket);
+    NetDeleteByteBuf(&compressedPacket);
     return BBSTATUS_SUCCESS;
 }
 
@@ -77,10 +77,10 @@ BBStatus NetClientHandleEvents(_IN_ NetClient* client){
         if(status != BBSTATUS_SUCCESS){
             return status;
         }
-        if(CoreGetSizeOfVarInt(dataLength) > length) {
+        if(NetGetSizeOfVarInt(dataLength) > length) {
             return BBSTATUS_SUCCESS;
         }
-        i32 packetLength = length - CoreGetSizeOfVarInt(dataLength);
+        i32 packetLength = length - NetGetSizeOfVarInt(dataLength);
         if(dataLength == 0){
             //DEBUG_PASS("parsing uncompressed packet in compressed format\n");
             status = ReadUncompressedPacket(client, &packet, packetLength);
@@ -96,7 +96,7 @@ BBStatus NetClientHandleEvents(_IN_ NetClient* client){
     }
 
     i32 id = 0;
-    status = CoreReadVarInt(&id, &packet);
+    status = NetReadVarInt(&id, &packet);
     if(status != BBSTATUS_SUCCESS){
         DEBUG_FAIL("cant read\n");
         goto FAIL;
@@ -131,6 +131,6 @@ BBStatus NetClientHandleEvents(_IN_ NetClient* client){
         }
     }
 FAIL:
-    CoreDeleteByteBuf(&packet);
+    NetDeleteByteBuf(&packet);
     return status;
 }

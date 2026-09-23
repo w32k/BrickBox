@@ -9,21 +9,21 @@
 
 
 
-SString CoreCreateSString(_IN_ const char* string){
+SString NetCreateSString(_IN_ const char* string){
     SString s = {0};
     s.string = (char*)string;
     s.length = strlen(string);
     return s;
 }
 
-void CoreSStringPuts(_IN_ const SString str){
+void NetSStringPuts(_IN_ const SString str){
     for(usize i = 0; i < str.length; i++){
         putchar(str.string[i]);
     }
 }
 
 
-usize CoreSplitSString(_IN_ const SString str, _IN_ char delim, _IN_ usize length, _OUT_ SString* array){
+usize NetSplitSString(_IN_ const SString str, _IN_ char delim, _IN_ usize length, _OUT_ SString* array){
     usize cur = 0;
     usize curOffset = 0;
     usize i = 0;

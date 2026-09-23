@@ -33,30 +33,30 @@ u32 NetReturnCompressionLimit(){
 
 BBStatus NetSetupPacket(_IN_ usize size, _OUT_ ByteBuf* packet){
     if(compressionEnabled == FALSE){
-        BBStatus status = CoreCreateByteBuf(packet, size + CoreGetSizeOfVarInt(size));
+        BBStatus status = NetCreateByteBuf(packet, size + NetGetSizeOfVarInt(size));
         if(status != BBSTATUS_SUCCESS){
             return status;
         }
 
-        status = CoreWriteVarInt(packet, size);
+        status = NetWriteVarInt(packet, size);
         if(status != BBSTATUS_SUCCESS) {
-            CoreDeleteByteBuf(packet);
+            NetDeleteByteBuf(packet);
             return BBSTATUS_CANT_WRITE_INTO_BYTEBUF;
         }
     } else {
-        size += CoreGetSizeOfVarInt(0x0);
-        BBStatus status = CoreCreateByteBuf(packet, size + CoreGetSizeOfVarInt(size));
+        size += NetGetSizeOfVarInt(0x0);
+        BBStatus status = NetCreateByteBuf(packet, size + NetGetSizeOfVarInt(size));
         if(status != BBSTATUS_SUCCESS){
             return status;
         }
-        status = CoreWriteVarInt(packet, size);
+        status = NetWriteVarInt(packet, size);
         if(status != BBSTATUS_SUCCESS) {
-            CoreDeleteByteBuf(packet);
+            NetDeleteByteBuf(packet);
             return BBSTATUS_CANT_WRITE_INTO_BYTEBUF;
         }
-        status = CoreWriteVarInt(packet, 0x00);
+        status = NetWriteVarInt(packet, 0x00);
         if(status != BBSTATUS_SUCCESS) {
-            CoreDeleteByteBuf(packet);
+            NetDeleteByteBuf(packet);
             return BBSTATUS_CANT_WRITE_INTO_BYTEBUF;
         }
     }
@@ -64,7 +64,7 @@ BBStatus NetSetupPacket(_IN_ usize size, _OUT_ ByteBuf* packet){
 }
 
 BBStatus NetDecompressPacket(_IN_ ByteBuf* iPacket, _IN_ usize pSize, _IN_ usize dSize, _OUT_ ByteBuf* rPacket){
-    BBStatus status = CoreCreateByteBuf(rPacket, dSize);
+    BBStatus status = NetCreateByteBuf(rPacket, dSize);
     if(status != BBSTATUS_SUCCESS){
         return status;
     }
@@ -84,7 +84,7 @@ BBStatus NetDecompressPacket(_IN_ ByteBuf* iPacket, _IN_ usize pSize, _IN_ usize
                 break;
             }
         }
-        CoreDeleteByteBuf(rPacket);
+        NetDeleteByteBuf(rPacket);
         return BBSTATUS_CANT_DECOMPRESS_PACKET;
     }
     return BBSTATUS_SUCCESS;

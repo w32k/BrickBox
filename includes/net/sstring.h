@@ -19,9 +19,9 @@ typedef struct _SString {
 
 
 
-SString CoreCreateSString(_IN_ const char* string);
-usize CoreSplitSString(_IN_ const SString str, _IN_ char delim, _IN_ usize length, _OUT_ SString* array);
-void CoreSStringPuts(_IN_ const SString str);
+SString NetCreateSString(_IN_ const char* string);
+usize NetSplitSString(_IN_ const SString str, _IN_ char delim, _IN_ usize length, _OUT_ SString* array);
+void NetSStringPuts(_IN_ const SString str);
 
 
 

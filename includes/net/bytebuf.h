@@ -21,24 +21,24 @@ typedef struct _ByteBuf {
 } ByteBuf;
 
 
-BBStatus CoreCreateByteBuf(_OUT_ ByteBuf* buffer, _IN_ usize size);
-BBStatus CoreDeleteByteBuf(_IN_ ByteBuf* buffer);
-void CoreResetReadIndex(_IN_ ByteBuf* buffer);
-BBStatus CoreReadByte(_OUT_ u8* byte, _IN_ ByteBuf* buffer);
-BBStatus CoreWriteByte(_IN_ ByteBuf* buffer, _IN_ u8 byte);
-BBStatus CoreReadU16(_OUT_ u16* number, _IN_ ByteBuf* buf);
-BBStatus CoreWriteU16(_IN_ ByteBuf* buf, _IN_ u16 byte);
-BBStatus CoreReadU32(_OUT_ u32* number, _IN_ ByteBuf* buf);
-BBStatus CoreWriteU32(_IN_ ByteBuf* buf, _IN_ u32 byte);
-BBStatus CoreReadU64(_OUT_ u64* number, _IN_ ByteBuf* buf);
-BBStatus CoreWriteU64(_IN_ ByteBuf* buf, _IN_ u64 byte);
-BBStatus CoreReadVarInt(_OUT_ i32* varInt, _IN_ ByteBuf* buf);
-BBStatus CoreWriteVarInt(_IN_ ByteBuf* buf, _IN_ i32 value);
-BBStatus CoreReadVarLong(_OUT_ i64* integer, _IN_ ByteBuf* buf);
-BBStatus CoreWriteVarLong(_IN_ ByteBuf* buf, _IN_ i64 value);
-BBStatus CoreWriteString(_IN_ ByteBuf* buf, _IN_ const char* string, _IN_ usize maxLength);
-BBStatus CoreWriteSString(_IN_ ByteBuf* buf, _IN_ const SString str, _IN_ usize maxLength);
-i32 CoreGetSizeOfVarInt(_IN_ i32 value);
+BBStatus NetCreateByteBuf(_OUT_ ByteBuf* buffer, _IN_ usize size);
+BBStatus NetDeleteByteBuf(_IN_ ByteBuf* buffer);
+void NetResetReadIndex(_IN_ ByteBuf* buffer);
+BBStatus NetReadByte(_OUT_ u8* byte, _IN_ ByteBuf* buffer);
+BBStatus NetWriteByte(_IN_ ByteBuf* buffer, _IN_ u8 byte);
+BBStatus NetReadU16(_OUT_ u16* number, _IN_ ByteBuf* buf);
+BBStatus NetWriteU16(_IN_ ByteBuf* buf, _IN_ u16 byte);
+BBStatus NetReadU32(_OUT_ u32* number, _IN_ ByteBuf* buf);
+BBStatus NetWriteU32(_IN_ ByteBuf* buf, _IN_ u32 byte);
+BBStatus NetReadU64(_OUT_ u64* number, _IN_ ByteBuf* buf);
+BBStatus NetWriteU64(_IN_ ByteBuf* buf, _IN_ u64 byte);
+BBStatus NetReadVarInt(_OUT_ i32* varInt, _IN_ ByteBuf* buf);
+BBStatus NetWriteVarInt(_IN_ ByteBuf* buf, _IN_ i32 value);
+BBStatus NetReadVarLong(_OUT_ i64* integer, _IN_ ByteBuf* buf);
+BBStatus NetWriteVarLong(_IN_ ByteBuf* buf, _IN_ i64 value);
+BBStatus NetWriteString(_IN_ ByteBuf* buf, _IN_ const char* string, _IN_ usize maxLength);
+BBStatus NetWriteSString(_IN_ ByteBuf* buf, _IN_ const SString str, _IN_ usize maxLength);
+i32 NetGetSizeOfVarInt(_IN_ i32 value);
 
 
 
