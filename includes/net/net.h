@@ -16,7 +16,7 @@
 
 void NetEnableCompression();
 void NetDisableCompression();
-boolean NetIsCompressionEnabled();
+bool NetIsCompressionEnabled();
 void NetSetCompressionLimit(_IN_ u32 limit);
 u32 NetReturnCompressionLimit();
 BBStatus NetSetupPacket(_IN_ usize size, _OUT_ ByteBuf* packet);

@@ -23,8 +23,6 @@ typedef int32_t i32;
 typedef uint64_t u64;
 typedef int64_t i64;
 
-typedef bool boolean;
-
 #else
 
 
@@ -40,17 +38,21 @@ typedef int i32;
 typedef unsigned long u64;
 typedef long i64;
 
-typedef u8 boolean;
+typedef u8 bool;
 
 #endif
 
 typedef float f32;
 typedef double f64;
-
+#ifndef TRUE
 #define TRUE (1)
+#endif
+#ifndef FALSE
 #define FALSE (0)
+#endif
+#ifndef NULL
 #define NULL ((void*)0)
-
+#endif
 
 #ifdef BIT64
 typedef u64 uptr;

@@ -24,10 +24,10 @@
 #define BBMALLOC(amount) malloc(amount)
 #define BBFREE(address) free(address)
 
-#define DEBUG_FAIL(message, ...) printf("\e[0;31m[-]\e[0;37m %s:%d: " message, __FILE__, __LINE__, ##__VA_ARGS__)
-#define DEBUG_PASS(message, ...) printf("\e[0;32m[+]\e[0;37m %s:%d: " message, __FILE__, __LINE__, ##__VA_ARGS__)
-#define DEBUG_WARNING(message, ...) printf("\e[0;33m[!]\e[0;37m %s:%d: " message, __FILE__, __LINE__, ##__VA_ARGS__)
-#define DEBUG_INFO(message, ...) printf("\e[0;35m[!]\e[0;37m %s:%d: " message, __FILE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG_FAIL(message, ...) printf("[FAIL] (%s:%d): " message, __FILE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG_PASS(message, ...) printf("[PASS] (%s:%d): " message, __FILE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG_WARNING(message, ...) printf("[WARNING] (%s:%d): " message, __FILE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG_INFO(message, ...) printf("[INFO] (%s:%d): " message, __FILE__, __LINE__, ##__VA_ARGS__)
 #define ARR_LEN(x) (sizeof(x) / sizeof(x[0]))
 
 typedef enum _BBStatus {

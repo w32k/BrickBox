@@ -50,4 +50,3 @@ i32 main(){
     NetCloseClient(&client);
     return 0;
 }
-

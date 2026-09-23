@@ -4,7 +4,7 @@
 
 // NOT THREAD SAFE, TODO: MAKE IT THREAD SAFE!!!!!!!!!!
 
-static boolean isGameRunning = TRUE;
+static bool isGameRunning = TRUE;
 
 
 
@@ -14,7 +14,6 @@ void GameEnd(){
     isGameRunning = FALSE;
 }
 
-boolean GameIsRunning(){
+bool GameIsRunning(){
     return isGameRunning;
 }
-

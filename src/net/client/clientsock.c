@@ -1,6 +1,10 @@
-#include <net/client.h>
 
-#ifndef _WIN32
+#ifdef _WIN32
+#include <ws2tcpip.h>
+#include <winsock.h>
+#include <io.h>
+#define close _close
+#else
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
@@ -11,6 +15,7 @@
 #include <unistd.h>
 #endif
 
+#include <net/client.h>
 #include <core/bytebuf.h>
 
 
@@ -23,10 +28,24 @@
 
 
 BBStatus NetCreateClient(_IN_ const char* ip, _IN_ uint16_t port, _OUT_ NetClient* client){
+    #ifdef _WIN32
+    WSADATA wsaData = {0};
+    int wsaResult = WSAStartup(2, &wsaData);
+    if(wsaResult != 0){
+        DEBUG_FAIL("wsa initialization failed\n");
+        #ifdef _WIN32
+        DEBUG_INFO("error: %d\n", WSAGetLastError());
+        #endif
+        return BBSTATUS_COULDNT_CREATE_SOCKET;
+    }
+    #endif
     client->state = NCSTATE_LOGIN;
-    client->sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+    client->sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if(client->sock == -1){
         DEBUG_FAIL("socket creation failed\n");
+        #ifdef _WIN32
+        DEBUG_INFO("error: %d\n", WSAGetLastError());
+        #endif
         return BBSTATUS_COULDNT_CREATE_SOCKET;
     }
     struct sockaddr_in sa = {.sin_family = AF_INET, .sin_port = htons(port)};
@@ -40,6 +59,9 @@ BBStatus NetCreateClient(_IN_ const char* ip, _IN_ uint16_t port, _OUT_ NetClien
     result = connect(client->sock, (struct sockaddr*)&sa, sizeof(sa));
     if(result == -1){
         DEBUG_FAIL("couldn't connect!\n");
+        #ifdef _WIN32
+        DEBUG_INFO("error: %d\n", WSAGetLastError());
+        #endif
         close(client->sock);
         client->sock = -1;
         return BBSTATUS_CONNECTION_FAILED;
@@ -122,4 +144,3 @@ BBStatus NetClientReadVarInt(_IN_ NetClient* client, _OUT_ i32* integer){
     }
     return BBSTATUS_POSITION_OVERFLOW;
 }
-

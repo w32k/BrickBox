@@ -12,7 +12,7 @@
 
 
 void GameEnd();
-boolean GameIsRunning();
+bool GameIsRunning();
 
 
 

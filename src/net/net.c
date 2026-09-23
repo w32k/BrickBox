@@ -1,10 +1,10 @@
 #include <net/net.h>
-#include <zlib.h>
+#include <miniz.h>
 
 
 
 
-static boolean compressionEnabled = FALSE;
+static bool compressionEnabled = FALSE;
 static u32 compressionLimit = 0;
 
 
@@ -18,7 +18,7 @@ void NetDisableCompression(){
     compressionEnabled = FALSE;
 }
 
-boolean NetIsCompressionEnabled(){
+bool NetIsCompressionEnabled(){
     return compressionEnabled;
 }
 
@@ -68,7 +68,7 @@ BBStatus NetDecompressPacket(_IN_ ByteBuf* iPacket, _IN_ usize pSize, _IN_ usize
     if(status != BBSTATUS_SUCCESS){
         return status;
     }
-    int zResult = uncompress(rPacket->data, &dSize, iPacket->data, pSize);
+    int zResult = uncompress(rPacket->data, (unsigned long*)&dSize, iPacket->data, pSize);
     if(zResult != Z_OK){
         switch(zResult){
             case Z_BUF_ERROR:{

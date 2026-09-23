@@ -22,7 +22,7 @@ PacketHandlerCallback configStateCallbacks[] = {
 
 
 static inline BBStatus ReadUncompressedPacket(_IN_ NetClient* client, _IN_ ByteBuf* packet, _IN_ i32 length){
-    DEBUG_PASS("parsing uncompressed packet (%d)\n", length);
+    //DEBUG_PASS("parsing uncompressed packet (%d)\n", length);
     BBStatus status = CoreCreateByteBuf(packet, length);
     if(status != BBSTATUS_SUCCESS){
         return status;
@@ -38,7 +38,7 @@ static inline BBStatus ReadUncompressedPacket(_IN_ NetClient* client, _IN_ ByteB
 
 static inline BBStatus ReadCompressedPacket(_IN_ NetClient* client, _IN_ i32 packetLength,
                             _IN_ i32 dataLength, _OUT_ ByteBuf* packet){
-    DEBUG_PASS("parsing compressed packet (p: %d, d: %d)\n", packetLength, dataLength);
+    //DEBUG_PASS("parsing compressed packet (p: %d, d: %d)\n", packetLength, dataLength);
     ByteBuf compressedPacket = {0};
     BBStatus status = CoreCreateByteBuf(&compressedPacket, packetLength);
     if(status != BBSTATUS_SUCCESS){
@@ -82,7 +82,7 @@ BBStatus NetClientHandleEvents(_IN_ NetClient* client){
         }
         i32 packetLength = length - CoreGetSizeOfVarInt(dataLength);
         if(dataLength == 0){
-            DEBUG_PASS("parsing uncompressed packet in compressed format\n");
+            //DEBUG_PASS("parsing uncompressed packet in compressed format\n");
             status = ReadUncompressedPacket(client, &packet, packetLength);
             if(status != BBSTATUS_SUCCESS){
                 return status;
@@ -101,13 +101,13 @@ BBStatus NetClientHandleEvents(_IN_ NetClient* client){
         DEBUG_FAIL("cant read\n");
         goto FAIL;
     }
-    DEBUG_INFO("id: %d, state: %d, length: %d\n", id, client->state, length);
+    //DEBUG_INFO("id: %d, state: %d, length: %d\n", id, client->state, length);
 
     switch(client->state){
         case NCSTATE_LOGIN:{
             usize len = ARR_LEN(loginStateCallbacks);
             if(id >= len || id < 0){
-                DEBUG_FAIL("invalid packet id! %d (at state %d)\n", id, client->state);
+               DEBUG_FAIL("invalid packet id! %d (at state %d)\n", id, client->state);
             } else {
                 status = loginStateCallbacks[id](client, &packet);
             }
