@@ -1,5 +1,5 @@
 #include <net/net.h>
-#include <miniz.h>
+#include <extern/miniz.h>
 
 
 
