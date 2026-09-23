@@ -1,4 +1,4 @@
-#include <core/sstring.h>
+#include <net/sstring.h>
 #include <string.h>
 #include <string.h>
 #include <stdio.h>
@@ -44,7 +44,3 @@ usize CoreSplitSString(_IN_ const SString str, _IN_ char delim, _IN_ usize lengt
     cur++;
     return cur;
 }
-
-
-
-

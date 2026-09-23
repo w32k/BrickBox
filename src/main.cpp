@@ -1,8 +1,7 @@
 #include <brickbox.h>
-#include <core/bytebuf.h>
+#include <net/bytebuf.h>
 #include <net/client.h>
 #include <net/net.h>
-#include <game/game.h>
 #include <net/packets/serverbound.h>
 #include <unistd.h>
 
@@ -26,7 +25,7 @@ i32 main(){
         DEBUG_FAIL("??\n");
         return 3;
     }
-    while(GameIsRunning()){
+    while(client.state != NCSTATE_EXIT){
         if(NetClientCheckForEvent(&client) == BBSTATUS_SUCCESS){
             BBStatus status = NetClientHandleEvents(&client);
             if(status != BBSTATUS_SUCCESS){
@@ -38,7 +37,7 @@ i32 main(){
                     }
                     default:{
                         DEBUG_FAIL("error while handling network events: %d\n", status);
-                        GameEnd();
+                        client.state = NCSTATE_EXIT;
                         break;
                     }
                 }

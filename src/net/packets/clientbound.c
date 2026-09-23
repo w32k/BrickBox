@@ -2,7 +2,6 @@
 #include <net/packets/serverbound.h>
 
 #include <net/net.h>
-#include <game/game.h>
 
 
 
@@ -11,7 +10,7 @@
 
 BBStatus NetLoginDisconnect(_IN_ NetClient* client, _IN_ ByteBuf* packet){
     DEBUG_PASS("Exiting during Login Stage!\n");
-    GameEnd();
+    client->state = NCSTATE_EXIT;
     return BBSTATUS_SUCCESS;
 }
 
@@ -53,7 +52,7 @@ BBStatus NetCustomPayload(_IN_ NetClient* client, _IN_ ByteBuf* packet){
 
 BBStatus NetConfigDisconnect(_IN_ NetClient* client, _IN_ ByteBuf* packet){
     DEBUG_PASS("Exiting during Config Stage!\n");
-    GameEnd();
+    client->state = NCSTATE_EXIT;
     return BBSTATUS_SUCCESS;
 }
 

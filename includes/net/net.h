@@ -10,7 +10,7 @@
 
 
 #include <brickbox.h>
-#include <core/bytebuf.h>
+#include <net/bytebuf.h>
 
 
 #ifdef __cplusplus

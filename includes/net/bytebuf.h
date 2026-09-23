@@ -10,7 +10,7 @@
 
 
 #include <brickbox.h>
-#include <core/sstring.h>
+#include <net/sstring.h>
 
 
 typedef struct _ByteBuf {

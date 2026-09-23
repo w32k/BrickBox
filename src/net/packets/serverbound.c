@@ -1,7 +1,7 @@
 #include <net/packets/clientbound.h>
-#include <core/bytebuf.h>
+#include <net/bytebuf.h>
 #include <string.h>
-#include <core/sstring.h>
+#include <net/sstring.h>
 #include <net/net.h>
 
 

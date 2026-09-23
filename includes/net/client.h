@@ -5,12 +5,13 @@
 
 
 #include <brickbox.h>
-#include <core/bytebuf.h>
+#include <net/bytebuf.h>
 
 typedef enum _NetClientState {
     NCSTATE_LOGIN,
     NCSTATE_CONFIG,
-    NCSTATE_PLAY
+    NCSTATE_PLAY,
+    NCSTATE_EXIT
 } NetClientState;
 
 typedef struct _NetClient {

@@ -1,4 +1,4 @@
-#include <core/bytebuf.h>
+#include <net/bytebuf.h>
 #include <string.h>
 
 
@@ -232,6 +232,3 @@ i32 CoreGetSizeOfVarInt(_IN_ i32 value){
     }
     return size;
 }
-
-
-

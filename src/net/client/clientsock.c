@@ -16,7 +16,7 @@
 #endif
 
 #include <net/client.h>
-#include <core/bytebuf.h>
+#include <net/bytebuf.h>
 
 
 

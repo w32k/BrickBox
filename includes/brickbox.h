@@ -28,6 +28,7 @@
 #define DEBUG_PASS(message, ...) printf("[PASS] (%s:%d): " message, __FILE__, __LINE__, ##__VA_ARGS__)
 #define DEBUG_WARNING(message, ...) printf("[WARNING] (%s:%d): " message, __FILE__, __LINE__, ##__VA_ARGS__)
 #define DEBUG_INFO(message, ...) printf("[INFO] (%s:%d): " message, __FILE__, __LINE__, ##__VA_ARGS__)
+
 #define ARR_LEN(x) (sizeof(x) / sizeof(x[0]))
 
 typedef enum _BBStatus {

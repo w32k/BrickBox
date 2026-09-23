@@ -9,7 +9,7 @@
 
 #include <brickbox.h>
 #include <net/client.h>
-#include <core/bytebuf.h>
+#include <net/bytebuf.h>
 
 #ifdef __cplusplus
 extern "C"
