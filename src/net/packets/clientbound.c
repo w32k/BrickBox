@@ -25,13 +25,14 @@ BBStatus NetLoginFinished(_IN_ NetClient* client, _IN_ ByteBuf* packet){
 }
 
 BBStatus NetInitCompression(_IN_ NetClient* client, _IN_ ByteBuf* packet){
-    NetEnableCompression();
+    //NetEnableCompression();
+    client->compressionEnabled = TRUE;
     i32 compLimit = 0;
     BBStatus status = NetReadVarInt(&compLimit, packet);
     if(status != BBSTATUS_SUCCESS){
         return status;
     }
-    NetSetCompressionLimit(compLimit);
+    client->compressionLimit = compLimit;
     return BBSTATUS_SUCCESS;
 }
 

@@ -7,12 +7,12 @@
 // TODO: rewrite this
 // its a mess lol
 
-PacketHandlerCallback loginStateCallbacks[] = {
+const PacketHandlerCallback loginStateCallbacks[] = {
     [0] = NetLoginDisconnect, [1] = NetHello, [2] = NetLoginFinished, [3] = NetInitCompression,
     [4] = NetCustomQuery, [5] = NetCookieRequest
 };
 
-PacketHandlerCallback configStateCallbacks[] = {
+const PacketHandlerCallback configStateCallbacks[] = {
     [0] = NetCookieRequest, [1] = NetCustomPayload, [2] = NetConfigDisconnect, [3] = NetFinishConfiguration,
     [4] = NetKeepAlive, [5] = NetPing, [6] = NetResetChat, [7] = NetRegistryData, [8] = NetResourcePackPop,
     [9] = NetResourcePackPush, [10] = NetStoreCookie, [11] = NetTransfer, [12] = NetUpdateEnabledFeatures,
@@ -66,7 +66,7 @@ BBStatus NetClientHandleEvents(_IN_ NetClient* client){
         return status;
     }
     if(length <= 0 || length >= 2000000) return BBSTATUS_POSITION_OVERFLOW;
-    if(!NetIsCompressionEnabled()){
+    if(client->compressionEnabled == FALSE){
         status = ReadUncompressedPacket(client, &packet, length);
         if(status != BBSTATUS_SUCCESS){
             return status;

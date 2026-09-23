@@ -15,8 +15,10 @@ typedef enum _NetClientState {
 } NetClientState;
 
 typedef struct _NetClient {
-    int sock;
+    i32 sock;
+    i32 compressionLimit;
     NetClientState state;
+    bool compressionEnabled;
 } NetClient;
 
 typedef BBStatus (*PacketHandlerCallback)(_IN_ NetClient* client, _IN_ ByteBuf* packet);

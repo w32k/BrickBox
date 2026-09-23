@@ -14,7 +14,7 @@ BBStatus NetHandshakePacket(_IN_ NetClient* client, _IN_ const char* ip, _IN_ u1
                 NetGetSizeOfVarInt(ipLength) + ipLength + sizeof(u16) + NetGetSizeOfVarInt(2);
     // BBStatus status = NetCreateByteBuf(&packet, size + NetGetSizeOfVarInt(size));
     // result = NetWriteVarInt(&packet, size);
-    BBStatus status = NetSetupPacket(size, &packet);
+    BBStatus status = NetSetupPacket(client->compressionEnabled, size, &packet);
     if(status != BBSTATUS_SUCCESS) {
         DEBUG_FAIL("couldn't create bytebuf\n");
         return status;
@@ -65,7 +65,7 @@ BBStatus NetLoginStart(_IN_ NetClient* client, _IN_ const char* username){
     // BBStatus status = NetCreateByteBuf(&packet, size + NetGetSizeOfVarInt(size));
     // if(status != BBSTATUS_SUCCESS) DEBUG_FAIL("fail\n");
     // result = NetWriteVarInt(&packet, size);
-    BBStatus status = NetSetupPacket(size, &packet);
+    BBStatus status = NetSetupPacket(client->compressionEnabled, size, &packet);
     if(status != BBSTATUS_SUCCESS) {
         DEBUG_FAIL("couldn't create\n");
         return status;
@@ -103,7 +103,7 @@ BBStatus NetLoginStart(_IN_ NetClient* client, _IN_ const char* username){
 BBStatus NetAcknowledgedPacket(_IN_ NetClient* client){
     ByteBuf packet = {0};
     usize size = NetGetSizeOfVarInt(0x03);
-    BBStatus status = NetSetupPacket(size, &packet);
+    BBStatus status = NetSetupPacket(client->compressionEnabled, size, &packet);
     if(status != BBSTATUS_SUCCESS) {
         DEBUG_FAIL("couldn't create\n");
         return status;
@@ -136,7 +136,7 @@ BBStatus NetKnownPacks(_IN_ NetClient* client, _IN_ char** knownPacks, _IN_ usiz
             size += NetGetSizeOfVarInt(strLen) + strLen;
         }
     }
-    BBStatus status = NetSetupPacket(size, &packet);
+    BBStatus status = NetSetupPacket(client->compressionEnabled, size, &packet);
     if(status != BBSTATUS_SUCCESS){
         DEBUG_FAIL("couldn't create\n");
         return status;
@@ -177,7 +177,7 @@ BBStatus NetKnownPacks(_IN_ NetClient* client, _IN_ char** knownPacks, _IN_ usiz
 BBStatus NetConfigSuccess(_IN_ NetClient* client){
     ByteBuf packet = {0};
     usize size = NetGetSizeOfVarInt(0x03);
-    BBStatus status = NetSetupPacket(size, &packet);
+    BBStatus status = NetSetupPacket(client->compressionEnabled, size, &packet);
     if(status != BBSTATUS_SUCCESS) {
         DEBUG_FAIL("couldn't create\n");
         return status;
@@ -200,7 +200,7 @@ FAIL:
 BBStatus NetResourcePackDecline(_IN_ NetClient* client, _IN_ u64 firstPartOfUUID, _IN_ u64 secondPartOfUUID){
     ByteBuf packet = {0};
     usize size = NetGetSizeOfVarInt(0x06) + sizeof(u64) + sizeof(u64) + NetGetSizeOfVarInt(1);
-    BBStatus status = NetSetupPacket(size, &packet);
+    BBStatus status = NetSetupPacket(client->compressionEnabled, size, &packet);
     if(status != BBSTATUS_SUCCESS) {
         DEBUG_FAIL("couldn't create\n");
         return status;
@@ -241,7 +241,7 @@ BBStatus NetKeepAliveResponse(_IN_ NetClient* client, _IN_ NetClientState state,
     if(state == NCSTATE_CONFIG) pId = 4;
     else pId = 27;
     usize size = NetGetSizeOfVarInt(pId) + sizeof(u64);
-    BBStatus status = NetSetupPacket(size, &packet);
+    BBStatus status = NetSetupPacket(client->compressionEnabled, size, &packet);
     if(status != BBSTATUS_SUCCESS){
         DEBUG_FAIL("couldn't create\n");
         return status;
@@ -272,7 +272,7 @@ BBStatus NetPong(_IN_ NetClient* client, _IN_ NetClientState state, _IN_ u32 id)
     if(state == NCSTATE_CONFIG) pId = 5;
     else pId = 44;
     usize size = NetGetSizeOfVarInt(pId) + sizeof(u32);
-    BBStatus status = NetSetupPacket(size, &packet);
+    BBStatus status = NetSetupPacket(client->compressionEnabled, size, &packet);
     if(status != BBSTATUS_SUCCESS){
         DEBUG_FAIL("couldn't create\n");
         return status;

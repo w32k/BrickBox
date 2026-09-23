@@ -2,36 +2,7 @@
 #include <extern/miniz.h>
 
 
-
-
-static bool compressionEnabled = FALSE;
-static u32 compressionLimit = 0;
-
-
-
-
-void NetEnableCompression(){
-    compressionEnabled = TRUE;
-}
-
-void NetDisableCompression(){
-    compressionEnabled = FALSE;
-}
-
-bool NetIsCompressionEnabled(){
-    return compressionEnabled;
-}
-
-void NetSetCompressionLimit(_IN_ u32 limit){
-    compressionLimit = limit;
-}
-
-u32 NetReturnCompressionLimit(){
-    return compressionLimit;
-}
-
-
-BBStatus NetSetupPacket(_IN_ usize size, _OUT_ ByteBuf* packet){
+BBStatus NetSetupPacket(_IN_ bool compressionEnabled, _IN_ usize size, _OUT_ ByteBuf* packet){
     if(compressionEnabled == FALSE){
         BBStatus status = NetCreateByteBuf(packet, size + NetGetSizeOfVarInt(size));
         if(status != BBSTATUS_SUCCESS){
