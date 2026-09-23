@@ -11,7 +11,10 @@
 #include <net/client.h>
 #include <core/bytebuf.h>
 
-
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 BBStatus NetLoginDisconnect(_IN_ NetClient* client, _IN_ ByteBuf* packet);
 BBStatus NetHello(_IN_ NetClient* client, _IN_ ByteBuf* packet);
 BBStatus NetLoginFinished(_IN_ NetClient* client, _IN_ ByteBuf* packet);
@@ -37,7 +40,9 @@ BBStatus NetClearDialog(_IN_ NetClient* client, _IN_ ByteBuf* packet);
 BBStatus NetShowDialog(_IN_ NetClient* client, _IN_ ByteBuf* packet);
 BBStatus NetCodeOfConduct(_IN_ NetClient* client, _IN_ ByteBuf* packet);
 BBStatus NetUpdateTags(_IN_ NetClient* client, _IN_ ByteBuf* packet);
-
+#ifdef __cplusplus
+}
+#endif
 
 
 

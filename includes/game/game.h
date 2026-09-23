@@ -10,10 +10,15 @@
 
 
 
-
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 void GameEnd();
 bool GameIsRunning();
-
+#ifdef __cplusplus
+}
+#endif
 
 
 

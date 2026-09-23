@@ -3,7 +3,6 @@
 
 
 
-#ifndef _NOSTDINC
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -23,24 +22,7 @@ typedef int32_t i32;
 typedef uint64_t u64;
 typedef int64_t i64;
 
-#else
 
-
-typedef unsigned char u8;
-typedef char i8;
-
-typedef unsigned short u16;
-typedef short i16;
-
-typedef unsigned int u32;
-typedef int i32;
-
-typedef unsigned long u64;
-typedef long i64;
-
-typedef u8 bool;
-
-#endif
 
 typedef float f32;
 typedef double f64;
@@ -54,19 +36,10 @@ typedef double f64;
 #define NULL ((void*)0)
 #endif
 
-#ifdef BIT64
-typedef u64 uptr;
-typedef i64 iptr;
-typedef u64 usize;
-typedef i64 isize;
-#elif BIT32
-typedef u32 uptr;
-typedef i32 iptr;
-typedef u32 usize;
-typedef i32 isize;
-#else
-#error "Brickbox only supports either 64bit or 32bit systems"
-#endif
+typedef uintptr_t uptr;
+typedef intptr_t iptr;
+typedef size_t usize;
+typedef size_t isize;
 
 
 #endif

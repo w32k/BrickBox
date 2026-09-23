@@ -6,7 +6,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DBIT64")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-add_executable(BrickBox src/main.c
+add_executable(BrickBox src/main.cpp
                         src/core/bytebuf.c src/core/sstring.c
                         src/game/game.c
                         src/net/net.c src/net/client/clienthandler.c src/net/client/clientsock.c
