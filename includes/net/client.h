@@ -11,6 +11,7 @@ typedef enum _NetClientState {
     NCSTATE_LOGIN,
     NCSTATE_CONFIG,
     NCSTATE_PLAY,
+    NCSTATE_STATUS,
     NCSTATE_EXIT
 } NetClientState;
 

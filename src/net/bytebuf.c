@@ -152,10 +152,10 @@ BBStatus NetWriteVarInt(_IN_ ByteBuf* buf, _IN_ i32 value){
         }
         uValue >>= 7;
     }
-
     status = NetWriteByte(buf, uValue);
     return status;
 }
+
 
 BBStatus NetReadVarLong(_OUT_ i64* integer, _IN_ ByteBuf* buf){
     i64 value = 0;

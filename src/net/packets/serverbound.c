@@ -126,9 +126,9 @@ FAIL:
 BBStatus NetKnownPacks(_IN_ NetClient* client, _IN_ char** knownPacks, _IN_ usize amount){
     ByteBuf packet = {0};
     usize size = NetGetSizeOfVarInt(0x07) + NetGetSizeOfVarInt(amount);
+    SString strArr[64] = {0};
     for(usize i = 0; i < amount; i++){
         SString str = NetCreateSString(knownPacks[i]);
-        SString strArr[64] = {0};
         usize len = NetSplitSString(str, ':', 64, strArr);
         for(usize i = 0; i < len; i++){
             usize strLen = strArr[i].length;
@@ -153,7 +153,6 @@ BBStatus NetKnownPacks(_IN_ NetClient* client, _IN_ char** knownPacks, _IN_ usiz
     }
     for(usize i = 0; i < amount; i++){
         SString str = NetCreateSString(knownPacks[i]);
-        SString strArr[64] = {0};
         usize len = NetSplitSString(str, ':', 64, strArr);
         for(usize i = 0; i < len; i++){
             //NetSStringPuts(strArr[i]);

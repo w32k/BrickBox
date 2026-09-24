@@ -20,7 +20,10 @@ typedef struct _ByteBuf {
     usize writeIndex;
 } ByteBuf;
 
-
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 BBStatus NetCreateByteBuf(_OUT_ ByteBuf* buffer, _IN_ usize size);
 BBStatus NetDeleteByteBuf(_IN_ ByteBuf* buffer);
 void NetResetReadIndex(_IN_ ByteBuf* buffer);
@@ -39,7 +42,9 @@ BBStatus NetWriteVarLong(_IN_ ByteBuf* buf, _IN_ i64 value);
 BBStatus NetWriteString(_IN_ ByteBuf* buf, _IN_ const char* string, _IN_ usize maxLength);
 BBStatus NetWriteSString(_IN_ ByteBuf* buf, _IN_ const SString str, _IN_ usize maxLength);
 i32 NetGetSizeOfVarInt(_IN_ i32 value);
-
+#ifdef __cplusplus
+}
+#endif
 
 
 
