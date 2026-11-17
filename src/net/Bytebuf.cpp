@@ -1,4 +1,4 @@
-#include <net/bytebuf.hpp>
+#include <net/Bytebuf.hpp>
 #include <string.h>
 #include <stdlib.h>
 #include <net/sstring.h>
