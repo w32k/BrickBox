@@ -5,7 +5,7 @@
 
 BBStatus NetCreateByteBuf(_OUT_ ByteBuf* buffer, _IN_ usize size){
     buffer->data = BBCALLOC(size, sizeof(u8));
-    if(buffer == NULL){
+    if(buffer->data == NULL){
         DEBUG_FAIL("failure to allocate memory of size %ld\n", size * sizeof(u8));
         return BBSTATUS_OUT_OF_MEMORY;
     }
@@ -155,7 +155,6 @@ BBStatus NetWriteVarInt(_IN_ ByteBuf* buf, _IN_ i32 value){
     status = NetWriteByte(buf, uValue);
     return status;
 }
-
 
 BBStatus NetReadVarLong(_OUT_ i64* integer, _IN_ ByteBuf* buf){
     i64 value = 0;

@@ -1,49 +1,43 @@
-#include <brickbox.h>
-#include <net/bytebuf.h>
-#include <net/client.h>
-#include <net/net.h>
-#include <net/packets/serverbound.h>
-#include <unistd.h>
+#include <net/bytebuf.hpp>
+#include <net/ClientSock.hpp>
+#include <stdio.h>
+#include <chrono>
+#include <thread>
 
-i32 main(){
-    DEBUG_INFO("Brickbox %s (Implementing %s)\n", VER, MC_VER);
 
-    NetClient client = {0};
-    BBStatus status = NetCreateClient("127.0.0.1", 25565, &client);
-    if(status != BBSTATUS_SUCCESS){
-        DEBUG_FAIL("couldn't connect! %d\n", status);
-        return 1;
+int main2(){
+    //DEBUG_INFO("Brickbox %s (Implementing %s)\n", VER, MC_VER);
+    Net::ClientSock sock;
+    std::string ip = "127.0.0.1";
+    sock.connect(ip.c_str(), 25565);
+
+    {
+        std::string ip = "127.0.0.1";
+        size_t size = Net::GetSizeOfVarInt(0x00) + Net::GetSizeOfVarInt(774) +
+                    Net::GetSizeOfVarInt(ip.length()) + ip.length() + sizeof(uint16_t) + Net::GetSizeOfVarInt(2);
+        Net::Bytebuf buffer(size + Net::GetSizeOfVarInt(size));
+        buffer.writeVarInt(size);
+        buffer.writeVarInt(0x00);
+        buffer.writeVarInt(774);
+        buffer.writeString("127.0.0.1", 255);
+        buffer.writeU16(25565);
+        buffer.writeVarInt(2);
+        sock.send((uint8_t*)buffer.getData(), size + Net::GetSizeOfVarInt(size));
     }
-    DEBUG_PASS("connected to server\n");
-    status = NetHandshakePacket(&client, "67.67.67.67", 67);
-    if(status != BBSTATUS_SUCCESS) {
-        DEBUG_FAIL("??\n");
-        return 2;
+    {
+        std::string name = "BrickBox";
+        size_t size = Net::GetSizeOfVarInt(0x00) + Net::GetSizeOfVarInt(name.length()) + name.length() + sizeof(uint64_t) + sizeof(uint64_t);
+        Net::Bytebuf buffer(size + Net::GetSizeOfVarInt(size));
+        buffer.writeVarInt(size);
+        buffer.writeVarInt(0x00);
+        buffer.writeString(name, 16);
+        buffer.writeU64(0);
+        buffer.writeU64(0);
+        sock.send((uint8_t*)buffer.getData(), size + Net::GetSizeOfVarInt(size));
     }
-    status = NetLoginStart(&client, "brickbox");
-    if(status != BBSTATUS_SUCCESS) {
-        DEBUG_FAIL("??\n");
-        return 3;
-    }
-    while(client.state != NCSTATE_EXIT){
-        if(NetClientCheckForEvent(&client) == BBSTATUS_SUCCESS){
-            BBStatus status = NetClientHandleEvents(&client);
-            if(status != BBSTATUS_SUCCESS){
-                switch(status){
-                    case BBSTATUS_WOULD_BLOCK:
-                    case BBSTATUS_NOT_IMPLEMENTED:
-                    case BBSTATUS_NO_EVENT_AVALIABLE:{
-                        break;
-                    }
-                    default:{
-                        DEBUG_FAIL("error while handling network events: %d\n", status);
-                        client.state = NCSTATE_EXIT;
-                        break;
-                    }
-                }
-            }
-        }
-    }
-    NetCloseClient(&client);
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    //while(1){continue;}
+
+
     return 0;
 }

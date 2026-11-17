@@ -36,7 +36,7 @@ BBStatus NetCreateClient(_IN_ const char* ip, _IN_ uint16_t port, _OUT_ NetClien
         #ifdef _WIN32
         DEBUG_INFO("error: %d\n", WSAGetLastError());
         #endif
-        return BBSTATUS_COULDNT_CREATE_SOCKET;
+        return BBSTATUS_CANT_SETUP_WSA;
     }
     #endif
     client->state = NCSTATE_LOGIN;
